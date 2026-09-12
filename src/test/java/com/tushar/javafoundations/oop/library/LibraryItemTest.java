@@ -46,4 +46,12 @@ class LibraryItemTest {
                 () -> new DVD("Inception", 0, 148)
         );
     }
+
+    @Test
+    void libraryItemShouldExposeStateThroughGetters() {
+        LibraryItem book = new Book("Java Basics", 101, "James Gosling");
+
+        assertEquals("Java Basics", book.getTitle());
+        assertEquals(101, book.getItemId());
+    }
 }
