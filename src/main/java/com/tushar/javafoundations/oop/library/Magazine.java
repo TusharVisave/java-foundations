@@ -1,6 +1,5 @@
 package com.tushar.javafoundations.oop.library;
 
-
 public class Magazine extends LibraryItem {
 
     private final int issueNumber;

@@ -5,7 +5,7 @@ public abstract class LibraryItem {
     private final String title;
     private final int itemId;
 
-    public LibraryItem(String title, int itemId) {
+    protected LibraryItem(String title, int itemId) {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Title cannot be empty");
         }
