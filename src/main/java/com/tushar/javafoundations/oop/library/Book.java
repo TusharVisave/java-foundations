@@ -1,6 +1,6 @@
 package com.tushar.javafoundations.oop.library;
 
-public class Book extends LibraryItem {
+public class Book extends LibraryItem implements Comparable<Book> {
 
     private final String author;
 
@@ -26,5 +26,10 @@ public class Book extends LibraryItem {
     @Override
     public int getLoanPeriodDays() {
         return 21;
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        return this.getTitle().compareToIgnoreCase(other.getTitle());
     }
 }
