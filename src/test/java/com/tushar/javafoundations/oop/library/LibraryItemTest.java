@@ -124,4 +124,14 @@ class LibraryItemTest {
         assertTrue(items.get(1) instanceof DVD);
         assertTrue(items.get(2) instanceof Magazine);
     }
+
+    @Test
+    void toStringShouldReturnReadableLibraryItemDetails() {
+        LibraryItem book = new Book("Java Basics", 101, "James Gosling");
+
+        assertEquals(
+                "Book | ID: 101 | Title: Java Basics | Loan Period: 21 days",
+                book.toString()
+        );
+    }
 }

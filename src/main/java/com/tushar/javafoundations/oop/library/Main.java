@@ -16,16 +16,7 @@ public class Main {
         System.out.println("-------------");
 
         for (LibraryItem item : items) {
-            displayItem(item);
+            System.out.println(item);
         }
-    }
-
-    private static void displayItem(LibraryItem item) {
-        System.out.println(
-                item.getItemType()
-                        + " | ID: " + item.getItemId()
-                        + " | Title: " + item.getTitle()
-                        + " | Loan Period: " + item.getLoanPeriodDays() + " days"
-        );
     }
 }

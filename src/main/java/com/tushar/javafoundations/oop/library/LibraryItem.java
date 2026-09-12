@@ -29,4 +29,12 @@ public abstract class LibraryItem {
     public abstract String getItemType();
 
     public abstract int getLoanPeriodDays();
+
+    @Override
+    public String toString() {
+        return getItemType()
+                + " | ID: " + itemId
+                + " | Title: " + title
+                + " | Loan Period: " + getLoanPeriodDays() + " days";
+    }
 }
