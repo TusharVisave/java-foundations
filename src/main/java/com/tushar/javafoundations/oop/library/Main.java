@@ -12,12 +12,20 @@ public class Main {
                 new Magazine("Tech Monthly", 103, 25)
         );
 
+        System.out.println("Library Items");
+        System.out.println("-------------");
+
         for (LibraryItem item : items) {
-            System.out.println(
-                    item.getItemType()
-                            + " | Title: " + item.getTitle()
-                            + " | Loan Period: " + item.getLoanPeriodDays() + " days"
-            );
+            displayItem(item);
         }
+    }
+
+    private static void displayItem(LibraryItem item) {
+        System.out.println(
+                item.getItemType()
+                        + " | ID: " + item.getItemId()
+                        + " | Title: " + item.getTitle()
+                        + " | Loan Period: " + item.getLoanPeriodDays() + " days"
+        );
     }
 }
