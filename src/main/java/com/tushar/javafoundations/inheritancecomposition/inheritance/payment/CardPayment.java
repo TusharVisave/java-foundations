@@ -20,14 +20,8 @@ public class CardPayment extends PaymentMethod {
 
     @Override
     public String pay(double amount) {
-        validateAmount(amount);
+        PaymentValidator.validateAmount(amount);
 
         return "Paid ₹" + amount + " using Card";
-    }
-
-    private void validateAmount(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Payment amount must be positive");
-        }
     }
 }
