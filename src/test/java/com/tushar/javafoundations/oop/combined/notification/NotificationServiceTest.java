@@ -7,9 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NotificationServiceTest {
 
-    private final NotificationService notificationService =
-            new NotificationService();
-
     @Test
     void shouldSendEmailNotificationThroughBaseType() {
 
@@ -20,8 +17,11 @@ class NotificationServiceTest {
                         "Welcome to the platform"
                 );
 
+        NotificationService notificationService =
+                new NotificationService(notification);
+
         String result =
-                notificationService.sendNotification(notification);
+                notificationService.sendNotification();
 
         assertEquals(
                 "Email sent to tushar@example.com with subject: Welcome and message: Welcome to the platform",
@@ -38,11 +38,47 @@ class NotificationServiceTest {
                         "Your OTP is 1234"
                 );
 
+        NotificationService notificationService =
+                new NotificationService(notification);
+
         String result =
-                notificationService.sendNotification(notification);
+                notificationService.sendNotification();
 
         assertEquals(
                 "SMS sent to 9876543210 with message: Your OTP is 1234",
+                result
+        );
+    }
+
+    @Test
+    void shouldRejectNullNotificationDependency() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new NotificationService(null)
+        );
+    }
+
+    @Test
+    void shouldWorkWithFakeNotificationWithoutRealImplementation() {
+
+        Notification fakeNotification =
+                new Notification("fake-recipient", "fake-message") {
+
+                    @Override
+                    public String send() {
+                        return "Fake notification sent";
+                    }
+                };
+
+        NotificationService notificationService =
+                new NotificationService(fakeNotification);
+
+        String result =
+                notificationService.sendNotification();
+
+        assertEquals(
+                "Fake notification sent",
                 result
         );
     }
@@ -81,15 +117,6 @@ class NotificationServiceTest {
                         "",
                         "Hello"
                 )
-        );
-    }
-
-    @Test
-    void shouldRejectNullNotification() {
-
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> notificationService.sendNotification(null)
         );
     }
 }
