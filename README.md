@@ -26,37 +26,40 @@ The learning approach is:
 6. Commit the work using Git
 7. Maintain the project on GitHub
 
-Each OOP concept is deliberately implemented **twice** — once in isolation to make the
-concept unambiguous, and once combined with the others in a single realistic model — so
-the repository shows both "I understand the pillar on its own" and "I can use them
-together."
+Each OOP concept is deliberately implemented **twice** — once in isolation to make the concept unambiguous, and once combined with the others in a single realistic model — so the repository shows both:
+
+> "I understand the pillar on its own" and "I can use them together."
 
 ---
 
 ## 📚 What This Repository Demonstrates
 
-| Concept                          | Where                                                                 |
+| Concept | Where |
 | --------------------------------- | ---------------------------------------------------------------------- |
-| Encapsulation & Abstraction       | `oop/library` — `LibraryItem`, `Book`, `DVD`, `Magazine`               |
-| Inheritance                       | `inheritancecomposition/inheritance/payment`                          |
-| Composition (favored alternative) | `inheritancecomposition/composition/payment`                          |
-| Runtime & Compile-time Polymorphism | `inheritancecomposition/polymorphism/payment`                       |
-| Single Responsibility Principle (SOLID) | `inheritancecomposition/inheritance/payment` — `PaymentValidator` extracted from `PaymentMethod` |
-| All 4 pillars combined            | `oop/combined/notification` — `Notification`, `EmailNotification`, `SmsNotification` |
-| Collections & Generics            | `collections/library` — `Library`, `LibraryUtils`                     |
+| Encapsulation & Abstraction | `oop/library` — `LibraryItem`, `Book`, `DVD`, `Magazine` |
+| Inheritance | `inheritancecomposition/inheritance/payment` |
+| Composition (favored alternative) | `inheritancecomposition/composition/payment` |
+| Runtime & Compile-time Polymorphism | `inheritancecomposition/polymorphism/payment` |
+| Single Responsibility Principle (SRP) | `inheritancecomposition/inheritance/payment` — `PaymentValidator` extracted from `PaymentMethod` |
+| Open/Closed Principle (OCP) | `solid/ocp/payment` — `WalletPayment` extension |
+| Liskov Substitution Principle (LSP) | `solid/lsp/payment` — separated refund capability |
+| Interface Segregation Principle (ISP) | `solid/isp/notification` — capability-based interfaces |
+| Dependency Inversion Principle (DIP) | `oop/combined/notification` — constructor injection |
+| All 4 OOP pillars combined | `oop/combined/notification` — `Notification`, `EmailNotification`, `SmsNotification` |
+| Collections & Generics | `collections/library` — `Library`, `LibraryUtils` |
 
 ---
 
 # 🛠️ Technologies
 
-| Technology     | Purpose                      |
+| Technology | Purpose |
 | --------------- | ----------------------------- |
-| Java 21          | Programming language          |
-| Maven            | Build and dependency management |
-| JUnit 5          | Unit testing                  |
-| IntelliJ IDEA    | Development environment       |
-| Git              | Version control                |
-| GitHub           | Repository hosting             |
+| Java 21 | Programming language |
+| Maven | Build and dependency management |
+| JUnit 5 | Unit testing |
+| IntelliJ IDEA | Development environment |
+| Git | Version control |
+| GitHub | Repository hosting |
 
 ---
 
@@ -75,14 +78,14 @@ java-foundations/
 │   │                   │
 │   │                   ├── oop/
 │   │                   │   ├── library/
-│   │                   │   │   ├── LibraryItem.java        (abstract base — encapsulation + abstraction)
+│   │                   │   │   ├── LibraryItem.java
 │   │                   │   │   ├── Book.java
 │   │                   │   │   ├── DVD.java
 │   │                   │   │   ├── Magazine.java
 │   │                   │   │   └── Main.java
 │   │                   │   │
 │   │                   │   └── combined/
-│   │                   │       └── notification/           (all 4 pillars together)
+│   │                   │       └── notification/
 │   │                   │           ├── Notification.java
 │   │                   │           ├── EmailNotification.java
 │   │                   │           ├── SmsNotification.java
@@ -90,7 +93,7 @@ java-foundations/
 │   │                   │
 │   │                   ├── inheritancecomposition/
 │   │                   │   ├── inheritance/
-│   │                   │   │   └── payment/                (inheritance + SRP-extracted validator)
+│   │                   │   │   └── payment/
 │   │                   │   │       ├── PaymentMethod.java
 │   │                   │   │       ├── CardPayment.java
 │   │                   │   │       ├── UpiPayment.java
@@ -98,7 +101,7 @@ java-foundations/
 │   │                   │   │       └── InheritanceMain.java
 │   │                   │   │
 │   │                   │   ├── composition/
-│   │                   │   │   └── payment/                (same domain, composition instead)
+│   │                   │   │   └── payment/
 │   │                   │   │       ├── PaymentMethod.java
 │   │                   │   │       ├── CardPayment.java
 │   │                   │   │       ├── UpiPayment.java
@@ -106,11 +109,34 @@ java-foundations/
 │   │                   │   │       └── CompositionMain.java
 │   │                   │   │
 │   │                   │   └── polymorphism/
-│   │                   │       └── payment/                (runtime + compile-time polymorphism)
+│   │                   │       └── payment/
 │   │                   │           ├── PaymentMethod.java
 │   │                   │           ├── CardPayment.java
 │   │                   │           ├── UpiPayment.java
 │   │                   │           └── PolymorphismMain.java
+│   │                   │
+│   │                   ├── solid/
+│   │                   │   ├── ocp/
+│   │                   │   │   └── payment/
+│   │                   │   │       ├── PaymentMethod.java
+│   │                   │   │       ├── CardPayment.java
+│   │                   │   │       ├── UpiPayment.java
+│   │                   │   │       └── WalletPayment.java
+│   │                   │   │
+│   │                   │   ├── lsp/
+│   │                   │   │   └── payment/
+│   │                   │   │       ├── PaymentMethod.java
+│   │                   │   │       ├── Refundable.java
+│   │                   │   │       ├── CardPayment.java
+│   │                   │   │       └── RefundablePayment.java
+│   │                   │   │
+│   │                   │   └── isp/
+│   │                   │       └── notification/
+│   │                   │           ├── NotificationSender.java
+│   │                   │           ├── NotificationScheduler.java
+│   │                   │           ├── RetryPolicy.java
+│   │                   │           ├── EmailNotification.java
+│   │                   │           └── SmsNotification.java
 │   │                   │
 │   │                   └── collections/
 │   │                       └── library/
@@ -123,15 +149,38 @@ java-foundations/
 │           └── com/
 │               └── tushar/
 │                   └── javafoundations/
+│                       │
 │                       ├── oop/
-│                       │   ├── library/LibraryItemTest.java
-│                       │   └── combined/notification/NotificationServiceTest.java
+│                       │   ├── library/
+│                       │   │   └── LibraryItemTest.java
+│                       │   └── combined/
+│                       │       └── notification/
+│                       │           └── NotificationServiceTest.java
+│                       │
 │                       ├── inheritancecomposition/
 │                       │   └── payment/
 │                       │       ├── PaymentValidatorTest.java
 │                       │       ├── PaymentComparisonTest.java
-│                       │       └── polymorphism/payment/PaymentPolymorphismTest.java
-│                       └── collections/library/LibraryTest.java
+│                       │       └── polymorphism/
+│                       │           └── payment/
+│                       │               └── PaymentPolymorphismTest.java
+│                       │
+│                       ├── solid/
+│                       │   ├── ocp/
+│                       │   │   └── payment/
+│                       │   │       └── WalletPaymentTest.java
+│                       │   │
+│                       │   ├── lsp/
+│                       │   │   └── payment/
+│                       │   │       └── LspViolationTest.java
+│                       │   │
+│                       │   └── isp/
+│                       │       └── notification/
+│                       │           └── IspViolationTest.java
+│                       │
+│                       └── collections/
+│                           └── library/
+│                               └── LibraryTest.java
 │
 ├── .gitignore
 ├── pom.xml
@@ -146,109 +195,196 @@ java-foundations/
 
 ## 1. Encapsulation & Abstraction — `oop/library`
 
-`LibraryItem` is an abstract class with `private final` fields and constructor-level
-validation (rejects blank titles, non-positive IDs). `Book`, `DVD`, and `Magazine` each
-implement the abstract `getItemType()` and `getLoanPeriodDays()` methods, so calling code
-never needs to know how loan periods differ per item type — that complexity is hidden
-behind the abstraction.
+`LibraryItem` is an abstract class with `private final` fields and constructor-level validation that rejects invalid input.
 
-## 2. Inheritance vs. Composition — same domain, two designs
+`Book`, `DVD`, and `Magazine` implement the abstract:
 
-Both versions model `CardPayment` and `UpiPayment`. The **inheritance** version has them
-extend an abstract `PaymentMethod`. The **composition** version instead has a
-`PaymentProcessor` that *holds* a `PaymentMethod` reference and delegates to it — showing
-the "favor composition over inheritance" trade-off directly, side by side, rather than as
-an abstract claim.
+- `getItemType()`
+- `getLoanPeriodDays()`
 
-## 3. Polymorphism — both kinds, not just one
+Calling code does not need to know how the loan period differs for each item type. The implementation details are hidden behind the abstraction.
 
-`PolymorphismMain` demonstrates:
-- **Runtime polymorphism**: a `List<PaymentMethod>` iterated and dispatched through the
-  common interface, calling each subtype's own `pay()`.
-- **Compile-time polymorphism**: an overloaded `calculateTotal()` method resolved at
-  compile time based on argument types (`int` vs `double`).
+---
 
-## 4. Single Responsibility Principle
+## 2. Inheritance vs. Composition — Same Domain, Two Designs
 
-The inheritance-based `PaymentMethod` originally validated its own inputs. That
-validation logic was extracted into a dedicated `PaymentValidator` utility class —
-`PaymentMethod` now only models a payment method, and `PaymentValidator` only validates.
-This is a real refactor commit (`refactor: split PaymentMethod validation logic to
-respect SRP`), not a from-scratch example, to show the "before → identify the violation
-→ fix it" process directly.
+Both versions model `CardPayment` and `UpiPayment`.
 
-## 5. All Four Pillars Together — `oop/combined/notification`
+### Inheritance
 
-`Notification` is an abstract base class (abstraction) with private validated fields
-(encapsulation). `EmailNotification` and `SmsNotification` extend it (inheritance) and
-override `send()` differently (polymorphism). `NotificationService` operates only on the
-`Notification` abstraction, so it works unchanged for any current or future notification
-type.
+The inheritance version uses an abstract `PaymentMethod` as the parent class.
 
-## 6. SOLID Principles
+```text
+PaymentMethod
+     │
+ ┌───┴────┐
+Card     UPI
+```
 
-The SOLID principles are demonstrated through real refactors and implementations in this
-repository. Each principle is connected to code that was deliberately changed or designed
-to demonstrate the principle in practice.
+### Composition
 
-### Single Responsibility Principle (SRP)
+The composition version uses a `PaymentProcessor` that holds a `PaymentMethod` reference and delegates to it.
 
-**Principle:** A class should have one reason to change and should have a focused
-responsibility.
+```text
+PaymentProcessor
+       │
+       ▼
+ PaymentMethod
+       │
+   ┌───┴────┐
+ Card      UPI
+```
+
+This demonstrates the **"favor composition over inheritance"** trade-off using actual Java code.
+
+---
+
+## 3. Polymorphism — Runtime and Compile-time
+
+`PolymorphismMain` demonstrates both major forms of polymorphism.
+
+### Runtime Polymorphism
+
+A common `PaymentMethod` reference can point to different implementations.
+
+```java
+List<PaymentMethod> payments = List.of(
+        new CardPayment(),
+        new UpiPayment()
+);
+
+for (PaymentMethod payment : payments) {
+    payment.pay();
+}
+```
+
+The overridden `pay()` method is selected at runtime based on the actual object.
+
+### Compile-time Polymorphism
+
+Method overloading demonstrates compile-time polymorphism.
+
+```java
+calculateTotal(int amount);
+calculateTotal(double amount);
+```
+
+The compiler determines which overloaded method to call based on the argument type.
+
+---
+
+## 4. Single Responsibility Principle (SRP)
+
+**Principle:** A class should have one reason to change and should have a focused responsibility.
 
 **Real code:** `inheritancecomposition/inheritance/payment`
 
-`PaymentMethod` originally handled both payment behavior and input validation. The
-validation responsibility was extracted into `PaymentValidator`.
+`PaymentMethod` originally handled both:
+
+- Payment behavior
+- Input validation
+
+The validation responsibility was extracted into a dedicated `PaymentValidator`.
 
 The refactor resulted in:
 
 - `PaymentMethod` → responsible for payment behavior.
 - `PaymentValidator` → responsible for validation.
 
-This was implemented as a real refactor rather than a separate theoretical example.
+This was implemented as a real refactor rather than a theoretical example.
 
-### Open/Closed Principle (OCP)
+---
+
+# 🧱 SOLID Principles
+
+The SOLID principles are demonstrated through real refactors and implementations in this repository.
+
+Each principle is connected to actual code that was deliberately changed or designed to demonstrate the principle in practice.
+
+---
+
+## 5. Single Responsibility Principle (SRP)
+
+**Principle:** A class should have one reason to change and should have a focused responsibility.
+
+**Real code:** `inheritancecomposition/inheritance/payment`
+
+`PaymentMethod` originally handled both payment behavior and input validation.
+
+The validation responsibility was extracted into `PaymentValidator`.
+
+### Result
+
+- `PaymentMethod` → payment behavior
+- `PaymentValidator` → validation
+
+This demonstrates how separating responsibilities can make classes easier to understand and maintain.
+
+---
+
+## 6. Open/Closed Principle (OCP)
 
 **Principle:** Software entities should be open for extension but closed for modification.
 
 **Real code:** `solid/ocp/payment`
 
-The payment hierarchy was extended by adding `WalletPayment` without modifying the existing
-payment implementations.
+The payment hierarchy was extended by adding `WalletPayment` without modifying the existing payment implementations.
 
-This demonstrates that a new payment type can be introduced by extending the existing
-abstraction instead of changing already-tested payment classes.
+The existing abstraction can therefore support a new payment type through extension.
 
-### Liskov Substitution Principle (LSP)
+### Key idea
 
-**Principle:** Objects of a subtype should be usable wherever the base type is expected
-without breaking the expected behavior.
+```text
+Existing PaymentMethod
+        │
+   ┌────┼──────┐
+ Card  UPI   Wallet
+```
+
+A new payment implementation can be added without changing already-tested payment classes.
+
+---
+
+## 7. Liskov Substitution Principle (LSP)
+
+**Principle:** Objects of a subtype should be usable wherever the base type is expected without breaking expected behavior.
 
 **Real code:** `solid/lsp/payment`
 
-The original payment hierarchy incorrectly required every `PaymentMethod` to support
-`refund()`. A non-refundable payment implementation had to throw
-`UnsupportedOperationException`, creating an LSP violation.
+The original payment hierarchy incorrectly required every `PaymentMethod` to support `refund()`.
 
-The design was refactored so that:
+A non-refundable payment implementation therefore had to throw:
 
-- `PaymentMethod` contains only the common `pay()` behavior.
+```java
+UnsupportedOperationException
+```
+
+This represented an LSP violation.
+
+### Refactored design
+
+- `PaymentMethod` contains only common `pay()` behavior.
 - `Refundable` represents the separate refund capability.
 - `CardPayment` implements `Refundable`.
 - Non-refundable payment types are not forced to provide refund behavior.
 
-This makes the inheritance hierarchy respect the actual capabilities of each type.
+This makes the type hierarchy better aligned with the actual capabilities of each implementation.
 
-### Interface Segregation Principle (ISP)
+---
+
+## 8. Interface Segregation Principle (ISP)
 
 **Principle:** Clients should not be forced to depend on methods they do not use.
 
 **Real code:** `solid/isp/notification`
 
-The original `Notification` interface contained sending, scheduling, and retry-policy
-operations. `SmsNotification` did not support all of these operations and therefore had
-to throw `UnsupportedOperationException`.
+The original `Notification` interface contained:
+
+- Sending
+- Scheduling
+- Retry policy
+
+`SmsNotification` did not support all of these operations and therefore had to throw `UnsupportedOperationException`.
 
 The interface was split into smaller capability-based interfaces:
 
@@ -256,18 +392,27 @@ The interface was split into smaller capability-based interfaces:
 - `NotificationScheduler`
 - `RetryPolicy`
 
-`SmsNotification` now implements only `NotificationSender`, while
-`EmailNotification` implements the capabilities it actually supports.
+### Result
 
-### Dependency Inversion Principle (DIP)
+`SmsNotification` implements only:
 
-**Principle:** High-level modules should depend on abstractions rather than concrete
-implementations.
+```java
+NotificationSender
+```
+
+while `EmailNotification` implements the capabilities it actually supports.
+
+This prevents classes from being forced to depend on irrelevant methods.
+
+---
+
+## 9. Dependency Inversion Principle (DIP)
+
+**Principle:** High-level modules should depend on abstractions rather than concrete implementations.
 
 **Real code:** `oop/combined/notification/NotificationService`
 
-`NotificationService` receives its `Notification` dependency through its constructor
-instead of creating a specific notification implementation internally.
+`NotificationService` receives its `Notification` dependency through its constructor.
 
 ```java
 public NotificationService(Notification notification) {
@@ -277,24 +422,71 @@ public NotificationService(Notification notification) {
 
     this.notification = notification;
 }
+```
 
+The service therefore depends on the `Notification` abstraction rather than a specific notification implementation.
 
-## 7. Collections & Generics — `collections/library`
+### Why Constructor Injection?
 
-`Library` and `LibraryUtils` apply Java's Collections framework and generics to manage a
-set of `LibraryItem`s — search, filtering, and utility operations over a generic
-collection rather than a hardcoded type.
+The dependency is provided from outside the class:
+
+```text
+NotificationService
+        │
+        ▼
+   Notification
+        │
+   ┌────┴────┐
+ Email      SMS
+```
+
+This makes the dependency explicit and also makes testing easier.
+
+The test suite provides a fake `Notification` implementation to verify the service without requiring a real email or SMS implementation.
+
+This was implemented through the:
+
+`feature/dip-constructor-injection`
+
+branch.
+
+---
+
+# 📚 10. Collections & Generics — `collections/library`
+
+`Library` and `LibraryUtils` apply Java's Collections Framework and generics to manage a collection of `LibraryItem` objects.
+
+The implementation demonstrates:
+
+- Collections
+- Generic types
+- Searching
+- Filtering
+- Utility methods
+- Type-safe collection operations
+
+The goal is to use collections in a realistic domain instead of isolated syntax examples.
 
 ---
 
 # 🧪 Testing
 
-Each concept has a corresponding JUnit 5 test class verifying both expected behavior and
-edge cases (e.g. invalid constructor arguments throwing `IllegalArgumentException`,
-correct dispatch for polymorphic calls, and the SRP-extracted validator behaving
-identically to the original in-line validation).
+Each concept has corresponding JUnit 5 tests verifying expected behavior and edge cases.
 
-Run all tests using:
+Examples include:
+
+- Invalid constructor arguments
+- Payment validation
+- Runtime polymorphism
+- SRP-extracted validation
+- OCP payment extension
+- LSP capability separation
+- ISP notification capabilities
+- DIP constructor injection
+- Fake dependency testing
+- Collection operations
+
+Run the complete test suite using:
 
 ```bash
 ./mvnw test
@@ -312,3 +504,66 @@ BUILD SUCCESS
 ```
 
 ---
+
+# 🔀 Git Workflow
+
+The SOLID implementations were developed using feature branches and integrated through pull requests.
+
+Example workflow:
+
+```bash
+git checkout -b feature/<feature-name>
+
+git add .
+
+git commit -m "descriptive commit message"
+
+git push -u origin feature/<feature-name>
+```
+
+After review and verification, the feature branch can be merged into `main`.
+
+This repository therefore demonstrates not only Java implementation but also basic professional Git workflow.
+
+---
+
+# 🎯 Learning Philosophy
+
+This repository follows a practical progression:
+
+```text
+Core Java
+    ↓
+OOP
+    ↓
+SOLID
+    ↓
+Collections & Generics
+    ↓
+Unit Testing
+    ↓
+DSA
+    ↓
+Backend Development
+    ↓
+Spring Boot
+```
+
+The focus is on understanding concepts by implementing them, testing them, and documenting the reasoning behind the design.
+
+---
+
+# 🌱 What's Next
+
+- Continue DSA in parallel in [`dsa-java`](https://github.com/TusharVisave/dsa-java).
+- Begin the Low-Level Design track after the Java foundations are sufficiently consolidated.
+- Keep this repository focused on Java fundamentals, OOP, SOLID, Collections, Generics, and testing.
+- Move framework and infrastructure learning into dedicated backend projects.
+
+---
+
+## 👨‍💻 Author
+
+**Tushar Visave**
+
+Java • DSA • Backend Development • Software Engineering
