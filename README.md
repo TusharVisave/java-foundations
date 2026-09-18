@@ -185,7 +185,101 @@ override `send()` differently (polymorphism). `NotificationService` operates onl
 `Notification` abstraction, so it works unchanged for any current or future notification
 type.
 
-## 6. Collections & Generics — `collections/library`
+## 6. SOLID Principles
+
+The SOLID principles are demonstrated through real refactors and implementations in this
+repository. Each principle is connected to code that was deliberately changed or designed
+to demonstrate the principle in practice.
+
+### Single Responsibility Principle (SRP)
+
+**Principle:** A class should have one reason to change and should have a focused
+responsibility.
+
+**Real code:** `inheritancecomposition/inheritance/payment`
+
+`PaymentMethod` originally handled both payment behavior and input validation. The
+validation responsibility was extracted into `PaymentValidator`.
+
+The refactor resulted in:
+
+- `PaymentMethod` → responsible for payment behavior.
+- `PaymentValidator` → responsible for validation.
+
+This was implemented as a real refactor rather than a separate theoretical example.
+
+### Open/Closed Principle (OCP)
+
+**Principle:** Software entities should be open for extension but closed for modification.
+
+**Real code:** `solid/ocp/payment`
+
+The payment hierarchy was extended by adding `WalletPayment` without modifying the existing
+payment implementations.
+
+This demonstrates that a new payment type can be introduced by extending the existing
+abstraction instead of changing already-tested payment classes.
+
+### Liskov Substitution Principle (LSP)
+
+**Principle:** Objects of a subtype should be usable wherever the base type is expected
+without breaking the expected behavior.
+
+**Real code:** `solid/lsp/payment`
+
+The original payment hierarchy incorrectly required every `PaymentMethod` to support
+`refund()`. A non-refundable payment implementation had to throw
+`UnsupportedOperationException`, creating an LSP violation.
+
+The design was refactored so that:
+
+- `PaymentMethod` contains only the common `pay()` behavior.
+- `Refundable` represents the separate refund capability.
+- `CardPayment` implements `Refundable`.
+- Non-refundable payment types are not forced to provide refund behavior.
+
+This makes the inheritance hierarchy respect the actual capabilities of each type.
+
+### Interface Segregation Principle (ISP)
+
+**Principle:** Clients should not be forced to depend on methods they do not use.
+
+**Real code:** `solid/isp/notification`
+
+The original `Notification` interface contained sending, scheduling, and retry-policy
+operations. `SmsNotification` did not support all of these operations and therefore had
+to throw `UnsupportedOperationException`.
+
+The interface was split into smaller capability-based interfaces:
+
+- `NotificationSender`
+- `NotificationScheduler`
+- `RetryPolicy`
+
+`SmsNotification` now implements only `NotificationSender`, while
+`EmailNotification` implements the capabilities it actually supports.
+
+### Dependency Inversion Principle (DIP)
+
+**Principle:** High-level modules should depend on abstractions rather than concrete
+implementations.
+
+**Real code:** `oop/combined/notification/NotificationService`
+
+`NotificationService` receives its `Notification` dependency through its constructor
+instead of creating a specific notification implementation internally.
+
+```java
+public NotificationService(Notification notification) {
+    if (notification == null) {
+        throw new IllegalArgumentException("Notification cannot be null");
+    }
+
+    this.notification = notification;
+}
+
+
+## 7. Collections & Generics — `collections/library`
 
 `Library` and `LibraryUtils` apply Java's Collections framework and generics to manage a
 set of `LibraryItem`s — search, filtering, and utility operations over a generic
@@ -218,11 +312,3 @@ BUILD SUCCESS
 ```
 
 ---
-
-# 🌱 What's Next
-
-- LLD track begins once Stage 1 (this repo) is fully closed out — tracked in a separate
-  `low-level-design` repository, not scattered into this one.
-- DSA continues in parallel in [`dsa-java`](https://github.com/TusharVisave/dsa-java).
-- This repository stays focused on Java/OOP fundamentals; it will not expand into
-  frameworks or infrastructure — that begins with the flagship backend projects.
